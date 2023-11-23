@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container {
+            height: 120%;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .box {
+            
+            margin-top: 100px;
+            width: 60%;
+            text-align: center;
+            font-size: 2rem;
+        }
+
+        .imagediv {
+            height: 200px;
+            width: 150px;
+            position: absolute;
+            overflow: hidden;
+            
+        }
+
+        .imagediv img{
+            transform: translateY(100%);
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+        }
+        @media  (max-width:850px) {
+            .container{
+                width: 660px;
+            }
+            .box{
+                width: 90%;
+                margin: 40px;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+        <div id="box" class="box"><h1>animation in jawascript.mousemove in a text area</h1></div>
+    </div>
+    <script>
+
+        // Throttling Function
+        const throttleFunction = (func, delay) => {
+
+
+            let prev = 0;
+            return (...args) => {
+
+                let now = new Date().getTime();
+
+
+                console.log(now - prev, delay);
+
+
+                if (now - prev > delay) {
+                    prev = now;
+
+
+                    return func(...args);
+                }
+            }
+        }
+
+        document.querySelector('#box').addEventListener('mousemove', throttleFunction((dets) => {
+
+            const arr =["1.jpg","2.jpg","3.jpg","4.jpg","5.jpg","6.jpg","7.jpg","8.jpg","9.jpg","10.jpg","11.jpg","12.jpg"];
+
+            let randomimg = Math.floor(Math.random()*arr.length);
+            selectimg = arr[randomimg];
+
+
+            var div = document.createElement("div");
+            div.classList.add("imagediv");
+            
+            div.style.left = dets.clientX + "px";
+            div.style.top = dets.clientY + "px";
+            var img = document.createElement("img");
+            img.setAttribute("src",selectimg);
+            
+            div.appendChild(img);
+            
+            document.body.appendChild(div);
+            gsap.to(img,{
+                y:"0",
+                ease:Power3,
+                duration:.7
+            });
+            setTimeout(function(){
+                div.remove();
+            },800)
+
+
+        }, 400)
+        );
+
+
+
+    </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" integrity="sha512-16esztaSRplJROstbIIdwX3N97V1+pZvV33ABoG1H2OyTttBxEGkTsoIVsiP1iaTtM8b3+hu2kB6pQ4Clr5yug==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+
+
+    
+</body>
+
+</html>
